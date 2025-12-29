@@ -35,24 +35,6 @@ This project was deployed **manually via the Azure Portal** to:
 - Authentication: **AzureWebJobsStorage**
 - Execution model: **Event-driven / serverless**
 
-### Queue Message Processing Logic
-```python
-import azure.functions as func
-import logging
-
-app = func.FunctionApp()
-
-@app.queue_trigger(
-    arg_name="azqueue",
-    queue_name="events-queue",
-    connection="AzureWebJobsStorage"
-)
-def ProcessEventQueue(azqueue: func.QueueMessage):
-    logging.info(
-        "Processed message: %s",
-        azqueue.get_body().decode("utf-8")
-    )
-
 ## Validation & Testing
 
 The solution was validated by:
@@ -96,6 +78,26 @@ Queue-triggered function did not show expected behavior initially.
 - Storage access via managed configuration  
 - Serverless execution reduces attack surface  
 - Ready for future integration with **Azure Key Vault**  
+
+
+### Queue Message Processing Logic
+```python
+import azure.functions as func
+import logging
+
+app = func.FunctionApp()
+
+@app.queue_trigger(
+    arg_name="azqueue",
+    queue_name="events-queue",
+    connection="AzureWebJobsStorage"
+)
+def ProcessEventQueue(azqueue: func.QueueMessage):
+    logging.info(
+        "Processed message: %s",
+        azqueue.get_body().decode("utf-8")
+    )
+
 
 ## Author
 **Olasehinde Victor**
